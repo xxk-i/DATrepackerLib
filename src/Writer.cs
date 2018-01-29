@@ -8,6 +8,7 @@ namespace DATRepackerLib
     {
         private static readonly byte[] MAGIC = { 0x44, 0x41, 0x54, 0x00 };
         private static readonly byte[] NUL = { 0x00 };
+        private static readonly byte[] FAKECRC = { 0x99 };
         private readonly FilePackInfo PackInfo;
 
         public Writer(FilePackInfo packInfo) 
@@ -136,7 +137,9 @@ namespace DATRepackerLib
                 _write(stream, PaddedBytes((int) pi.FileSizeDict[file]));
             }
 
-            // CRC table (just nuls)
+            // CRC table (starts with dummy byte to prevent game crash,
+            // then just nulls)
+            _write(stream, FAKECRC);
             _write(stream, NulPad(pi.CrcTable.TotalSize()));
 
 
