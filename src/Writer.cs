@@ -140,7 +140,7 @@ namespace DATRepackerLib
             // CRC table (starts with dummy byte to prevent game crash,
             // then just nulls)
             _write(stream, FAKECRC);
-            _write(stream, NulPad(pi.CrcTable.TotalSize()));
+            _write(stream, NulPad(pi.CrcTable.TotalSize() - 1));
 
 
             // Now just glom on files
